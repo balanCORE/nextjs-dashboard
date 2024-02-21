@@ -10,6 +10,8 @@ export default function LoginPage() {
             <AcmeLogo />
           </div>
         </div>
+        <p>user@nextmail.com</p>
+        <p>123456</p>
         <LoginForm />
       </div>
     </main>

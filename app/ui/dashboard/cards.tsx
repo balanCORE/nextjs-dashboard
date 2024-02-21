@@ -1,3 +1,5 @@
+'use client';
+
 import {
   BanknotesIcon,
   ClockIcon,
@@ -5,7 +7,7 @@ import {
   InboxIcon,
 } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
-import { fetchCardData } from '@/app/lib/data';
+import { useTranslation } from 'react-i18next';
 
 const iconMap = {
   collected: BanknotesIcon,
@@ -13,29 +15,6 @@ const iconMap = {
   pending: ClockIcon,
   invoices: InboxIcon,
 };
-
-export default async function CardWrapper() {
-  const {
-    totalPaidInvoices,
-    numberOfCustomers,
-    numberOfInvoices,
-    totalPendingInvoices,
-  } = await fetchCardData();
-  return (
-    <>
-      {/* NOTE: comment in this code when you get to this point in the course */}
-
-      <Card title="Collected" value={totalPaidInvoices} type="collected" />
-      <Card title="Pending" value={totalPendingInvoices} type="pending" />
-      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
-      <Card
-        title="Total Customers"
-        value={numberOfCustomers}
-        type="customers"
-      />
-    </>
-  );
-}
 
 export function Card({
   title,
@@ -47,12 +26,13 @@ export function Card({
   type: 'invoices' | 'customers' | 'pending' | 'collected';
 }) {
   const Icon = iconMap[type];
+  const { t } = useTranslation();
 
   return (
     <div className="rounded-xl bg-gray-50 p-2 shadow-sm">
       <div className="flex p-4">
         {Icon ? <Icon className="h-5 w-5 text-gray-700" /> : null}
-        <h3 className="ml-2 text-sm font-medium">{title}</h3>
+        <h3 className="ml-2 text-sm font-medium">{t(`card.${title}`)}</h3>
       </div>
       <p
         className={`${lusitana.className}
